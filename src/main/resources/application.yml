@@ -1,0 +1,125 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+    remote-ip-header: x-forwarded-for
+  port: 8888
+
+# 系统配置
+system:
+  name: door
+
+spring:
+  application: door
+  # 环境 dev|pro
+  profiles:
+    active: dev
+  # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+  # 指定静态资源的路径
+  resources:
+    static-locations: file:c:/uploads
+#文件存放路径
+upload:
+  face: d:/Face-ACM/villegePic/face/
+  excel: d:/villegePic/excel/
+  urlPrefix: http://localhost:8888/
+#  face: /data/villegePic/face/
+#  excel: /data/villegePic/excel/
+
+# 人脸识别参数
+plateocr:
+#  APPID: 1254088100
+  secretId:
+  secretKey:
+  serverIp: iai.tencentcloudapi.com
+  area: ap-guangzhou
+  groupId: sun_990
+  personIdPre: Test_
+  nonceStr: sun123456
+  used: true
+  passPercent: 80
+
+  # Redis配置
+  redis:
+    open: true  # 是否开启redis缓存  true开启   false关闭
+    database: 0
+#    host: 106.13.35.76
+    host: localhost
+    port: 6379
+    password: 123456        # 密码（默认为空），发布请设置密码starry.plus
+    timeout: 6000ms  # 连接超时时长（毫秒）
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms    # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 10      # 连接池中的最大空闲连接
+        min-idle: 5       # 连接池中的最小空闲连接
+fdfs:
+  so-timeout: 60000
+  connect-timeout: 6000
+  tracker-list:            #TrackerList参数,支持多个
+    - 192.168.2.2:22122
+  pool:
+    max-total: 200          #连接池最大数量
+    max-total-per-key: 50   #每个tracker地址的最大连接数
+    max-wait-millis: 5000   #连接耗尽时等待获取连接的最大毫秒数
+
+# Mybatis配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.villege.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      #逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+    banner: false
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志配置
+logging:
+  config: classpath:logback-spring.xml
+
+# token配置
+jwt:
+  # HTTP header自定义参数
+  header: token
+  # 加密秘钥
+  secret: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4K67DMlSPXbgG0MPp0gH
+  # token有效时长，15天，单位秒
+  expire: 1296000
+
+# knife4j接口文档配置
+knife4j:
+  enable: true      # true开启  false关闭
+  basic:
+    enable: false
+    username: admin
+    password: 123456

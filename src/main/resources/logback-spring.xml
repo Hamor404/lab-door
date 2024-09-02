@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springboot.sample" level="TRACE" />
+
+    <!-- *************如果不需要生成日志文件只需注释下面这段即可****************** -->
+    <!--定义日志文件的存储地址-->
+    <!--<property name="LOG_PATH" value="C:/lunhui_log/" />-->
+    <!--&lt;!&ndash; 按照每天生成日志文件 &ndash;&gt;-->
+    <!--<appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--&lt;!&ndash;日志文件输出的文件名&ndash;&gt;-->
+            <!--<FileNamePattern>${LOG_PATH}/web.%d{yyyy-MM-dd}.log</FileNamePattern>-->
+            <!--&lt;!&ndash;日志文件保留天数,会自动删除之前的文件&ndash;&gt;-->
+            <!--<MaxHistory>15</MaxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+            <!--&lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+    <!--&lt;!&ndash; 日志输出级别 &ndash;&gt;-->
+    <!--<root level="INFO">-->
+        <!--<appender-ref ref="FILE" />-->
+    <!--</root>-->
+    <!-- ************************************************************************ -->
+
+    <!-- 开发、测试环境 -->
+    <springProfile name="dev,test">
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springboot.sample" level="INFO" />
+        <logger name="com.starry" level="DEBUG" />
+    </springProfile>
+
+    <!-- 生产环境(level的值都改成ERROR) -->
+    <springProfile name="pro">
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springboot.sample" level="INFO" />
+        <logger name="com.starry" level="DEBUG" />
+    </springProfile>
+
+</configuration>
